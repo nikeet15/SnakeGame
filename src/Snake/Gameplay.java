@@ -137,9 +137,10 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
         if(e.getKeyCode()==KeyEvent.VK_RIGHT)
         {
             mov++;
+//            System.out.println(mov);
             right= true;
-            if(!left)
-            {
+            if(!left)                  // added this part to avoid collision of snake to its body like
+            {                          // if moving towards right cannot move left as it collide with itself hence ignore that keypress
                 right= true;
             }
             
@@ -218,8 +219,93 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e) {    //called when timer starts
         
+        timer.start();
+        if(right)
+        {
+            for (int i = len; i > 0; i--) {
+                
+                snakeYlength[i]= snakeYlength[i-1];
+            }
+            
+            for (int i = len; i >= 0; i--) {
+             
+                if(i==0)
+                    snakeXlength[i]= snakeXlength[i]+25;
+                
+                else
+                    snakeXlength[i]= snakeXlength[i-1];
+                
+                if(snakeXlength[i]>850)
+                    snakeXlength[i]= 25;
+            }
+            
+        }
+        
+        else if(left)
+        {
+            for (int i = len; i > 0; i--) {
+                
+                snakeYlength[i]= snakeYlength[i-1];
+            }
+            
+            for (int i = len; i >= 0; i--) {
+             
+                if(i==0)
+                    snakeXlength[i]= snakeXlength[i]-25;
+                
+                else
+                    snakeXlength[i]= snakeXlength[i-1];
+                
+                if(snakeXlength[i]<25)
+                    snakeXlength[i]= 850;
+            }
+            
+        }
+        
+        else if(up)
+        {
+            for (int i = len; i > 0; i--) {
+                
+                snakeXlength[i]= snakeXlength[i-1];
+            }
+            
+            for (int i = len; i >= 0; i--) {
+             
+                if(i==0)
+                    snakeYlength[i]= snakeYlength[i]-25;
+                
+                else
+                    snakeYlength[i]= snakeYlength[i-1];
+                
+                if(snakeYlength[i]<75)
+                    snakeYlength[i]= 625;
+            }
+            
+        }
+        
+        else if(down)
+        {
+            for (int i = len; i > 0; i--) {
+                
+                snakeXlength[i]= snakeXlength[i-1];
+            }
+            
+            for (int i = len; i >= 0; i--) {
+             
+                if(i==0)
+                    snakeYlength[i]= snakeYlength[i]+25;
+                
+                else
+                    snakeYlength[i]= snakeYlength[i-1];
+                
+                if(snakeYlength[i]>625)
+                    snakeYlength[i]= 75;
+            }
+        }
+        
+        repaint();
     }
     
 }
