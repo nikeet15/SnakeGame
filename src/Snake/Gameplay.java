@@ -123,34 +123,103 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
             
             
         }
-        
-        
-        
-        g.dispose();
-        
-        
-        
-        
+          
+        g.dispose(); 
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(e.getKeyCode()==KeyEvent.VK_RIGHT)
+        {
+            mov++;
+            right= true;
+            if(!left)
+            {
+                right= true;
+            }
+            
+            else
+            {
+                right= false;
+                left= true;
+            }
+            
+            up= false;
+            down= false;
+        }
+        
+        else if(e.getKeyCode()==KeyEvent.VK_LEFT)
+        {
+            mov++;
+            left= true;
+            if(!right)
+            {
+                left= true;
+            }
+            
+            else
+            {
+                left= false;
+                right= true;
+            }
+            
+            up= false;
+            down= false;
+        }
+        
+        else if(e.getKeyCode()==KeyEvent.VK_UP)
+        {
+            mov++;
+            up= true;
+            
+            if(!down)
+            {
+                up= true;
+            }
+            
+            else
+            {
+                up= false;
+                down= true;
+            }
+            
+            left= false;
+            right= false;
+        }
+        
+        else if(e.getKeyCode()==KeyEvent.VK_DOWN)
+        {
+            mov++;
+            down= true;
+            if(!up)
+            {
+                down= true;
+            }
+            
+            else
+            {
+                down= false;
+                up= true;
+            }
+            
+            left= false;
+            right= false;
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
     
 }
