@@ -6,6 +6,7 @@
 package Snake;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,8 +46,9 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
     private int xpos,ypos;    
     
     private Timer timer;
-    private int delay= 100;
+    private int delay= 120;
     private int mov=0;
+    private int score= 0;
     
     public Gameplay(){
         
@@ -88,6 +90,16 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
         //backgroung of gameplay
         g.setColor(Color.black);
         g.fillRect(25,75,850,575);
+        
+        //draw score
+        g.setColor(Color.white);
+        g.setFont(new Font("arial", Font.PLAIN, 14));
+        g.drawString("Score: "+score, 780, 30);
+        
+        //draw length
+        g.setColor(Color.white);
+        g.setFont(new Font("arial", Font.PLAIN, 14));
+        g.drawString("Length: "+len, 780, 50);
         
         //initialization of snake................
         
@@ -143,7 +155,13 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
         // if snake eats the food/enemy-----
         if(enemyx[xpos] == snakeXlength[0] && enemyy[ypos] == snakeYlength[0])
         {
+            score++;
             len++;
+            System.out.println(timer.getDelay());
+            delay-=3;
+            timer.setDelay(delay);
+            //timer.restart();
+            
             xpos= r.nextInt(34);
             ypos= r.nextInt(23);
         }
@@ -151,7 +169,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
         enemyimage= new ImageIcon("Icons\\enemy.png");
         enemyimage.paintIcon(this, g, enemyx[xpos], enemyy[ypos]);
         
-          
+        //repaint();
         g.dispose(); 
     }
 
