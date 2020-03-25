@@ -28,9 +28,6 @@ public class Main {
         f.setVisible(true);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        
-        
         f.add(g);
     }
-    
 }

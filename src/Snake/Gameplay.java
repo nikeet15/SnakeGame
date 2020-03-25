@@ -39,6 +39,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
     private boolean right= false;
     private boolean up= false;
     private boolean down= false;
+    private boolean over= false;
     
     private int enemyx[]= new int[50];
     private int enemyy[]= new int[50];
@@ -174,7 +175,8 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
             
             if(snakeXlength[i]==snakeXlength[0] && snakeYlength[i]==snakeYlength[0])
             {
-                right=left=up=down= false;
+                over= true;
+                left=right=up=down=false;
                 //draw game over
                 g.setColor(Color.white);
                 g.setFont(new Font("arial", Font.BOLD, 50));
@@ -185,7 +187,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
                 g.setFont(new Font("arial", Font.BOLD, 20));
                 g.drawString("SPACE for restart", 350, 350);
                 
-                break;
+//                break;
             }
         }
         
@@ -201,17 +203,21 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
     @Override
     public void keyPressed(KeyEvent e) {
         
-        if(e.getKeyCode()==KeyEvent.VK_SPACE)
+        if(over == true && e.getKeyCode()==KeyEvent.VK_SPACE)
         {
-            //reset
-            
+            //reset position of snake
+            over= false;
             mov= 0;
             score= 0;
             len= 3;
+            xpos= r.nextInt(34);
+            ypos= r.nextInt(23);
+            delay= 120;
+            timer.setDelay(delay);
             repaint();
         }
         
-        else if(e.getKeyCode()==KeyEvent.VK_RIGHT)
+        else if(over==false && e.getKeyCode()==KeyEvent.VK_RIGHT)
         {
             mov++;
 //            System.out.println(mov);
@@ -231,7 +237,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
             down= false;
         }
         
-        else if(e.getKeyCode()==KeyEvent.VK_LEFT)
+        else if(over==false && e.getKeyCode()==KeyEvent.VK_LEFT)
         {
             mov++;
             left= true;
@@ -250,7 +256,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
             down= false;
         }
         
-        else if(e.getKeyCode()==KeyEvent.VK_UP)
+        else if(over==false && e.getKeyCode()==KeyEvent.VK_UP)
         {
             mov++;
             up= true;
@@ -270,7 +276,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
             right= false;
         }
         
-        else if(e.getKeyCode()==KeyEvent.VK_DOWN)
+        else if(over == false && e.getKeyCode()==KeyEvent.VK_DOWN)
         {
             mov++;
             down= true;
