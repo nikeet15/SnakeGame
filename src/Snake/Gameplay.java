@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -27,6 +28,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
     private ImageIcon upmouth;
     private ImageIcon downmouth;
     private ImageIcon snakeimage;
+    private ImageIcon enemyimage;
     
     private int[] snakeXlength= new int[750];   //at 0th index head of snake
     private int[] snakeYlength= new int[750];
@@ -37,11 +39,28 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
     private boolean up= false;
     private boolean down= false;
     
+    private int enemyx[]= new int[50];
+    private int enemyy[]= new int[50];
+    private Random r;
+    private int xpos,ypos;    
+    
     private Timer timer;
     private int delay= 100;
     private int mov=0;
     
     public Gameplay(){
+        
+        r= new Random();
+        xpos= r.nextInt(34);
+        ypos= r.nextInt(23);
+        
+        for (int i = 0; i < 34; i++) {
+            enemyx[i]= 25*i+25;    
+        }
+        
+        for (int i = 0; i < 23; i++) {
+            enemyy[i]= 25*i+75;
+        }
         
         addKeyListener(this);
         setFocusable(true);
@@ -119,10 +138,19 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
                 snakeimage= new ImageIcon("Icons\\snakeimage.png");
                 snakeimage.paintIcon(this, g, snakeXlength[i], snakeYlength[i]);
             }
-            
-            
-            
         }
+        
+        // if snake eats the food/enemy-----
+        if(enemyx[xpos] == snakeXlength[0] && enemyy[ypos] == snakeYlength[0])
+        {
+            len++;
+            xpos= r.nextInt(34);
+            ypos= r.nextInt(23);
+        }
+        
+        enemyimage= new ImageIcon("Icons\\enemy.png");
+        enemyimage.paintIcon(this, g, enemyx[xpos], enemyy[ypos]);
+        
           
         g.dispose(); 
     }
@@ -210,7 +238,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
             
             left= false;
             right= false;
-        }
+        }       
     }
 
     @Override
