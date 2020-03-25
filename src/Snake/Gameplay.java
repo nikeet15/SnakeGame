@@ -105,7 +105,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
         
         //at start putting snake at left corner
         if(mov==0)
-        {
+        {                   
             snakeXlength[2]= 50;
             snakeXlength[1]= 75;
             snakeXlength[0]= 100;
@@ -169,6 +169,26 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
         enemyimage= new ImageIcon("Icons\\enemy.png");
         enemyimage.paintIcon(this, g, enemyx[xpos], enemyy[ypos]);
         
+        //check collision
+        for (int i = 1; i < len; i++) {
+            
+            if(snakeXlength[i]==snakeXlength[0] && snakeYlength[i]==snakeYlength[0])
+            {
+                right=left=up=down= false;
+                //draw game over
+                g.setColor(Color.white);
+                g.setFont(new Font("arial", Font.BOLD, 50));
+                g.drawString("GAME OVER", 300, 300);
+                
+                //draw restart
+                g.setColor(Color.white);
+                g.setFont(new Font("arial", Font.BOLD, 20));
+                g.drawString("SPACE for restart", 350, 350);
+                
+                break;
+            }
+        }
+        
         //repaint();
         g.dispose(); 
     }
@@ -180,7 +200,18 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode()==KeyEvent.VK_RIGHT)
+        
+        if(e.getKeyCode()==KeyEvent.VK_SPACE)
+        {
+            //reset
+            
+            mov= 0;
+            score= 0;
+            len= 3;
+            repaint();
+        }
+        
+        else if(e.getKeyCode()==KeyEvent.VK_RIGHT)
         {
             mov++;
 //            System.out.println(mov);
